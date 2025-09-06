@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -40,29 +41,45 @@ namespace KanbanApp
 
         private void BuildUI()
         {
-            this.Text = "Kanban Board";
+            this.Text = "Task Board";
             this.Size = new Size(1000, 600);
 
             // Top input controls
             txtTitle = new TextBox { Left = 10, Top = 10, Width = 200 };
             dtpDeadline = new DateTimePicker { Left = 220, Top = 10, Width = 150 };
+            BackColor = Color.LightSkyBlue;
+            dtpDeadline.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
             cmbPriority = new ComboBox { Left = 380, Top = 10, Width = 100 };
             cmbPriority.Items.AddRange(new string[] { "High", "Medium", "Low" });
-            chkNotify = new CheckBox { Left = 490, Top = 12, Text = "Notify by Email" };
+            chkNotify = new CheckBox { Left = 490, Top = 12, Text = "Notify by Email"};
+            chkNotify.ForeColor = Color.Black;
+            chkNotify.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
             btnAdd = new Button { Left = 600, Top = 10, Text = "Add Task" };
+            btnAdd.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
+            btnAdd.ForeColor = Color.Black;
             btnAdd.Click += BtnAdd_Click;
 
             btnSave = new Button { Left = 700, Top = 10, Text = "Save" };
             btnSave.Click += BtnSave_Click;
+            btnSave.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
+            btnSave.ForeColor = Color.Black;
             btnLoad = new Button { Left = 780, Top = 10, Text = "Load" };
             btnLoad.Click += BtnLoad_Click;
+            btnLoad.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);   
+            btnLoad.ForeColor = Color.Black;
 
             this.Controls.AddRange(new Control[] { txtTitle, dtpDeadline, cmbPriority, chkNotify, btnAdd, btnSave, btnLoad });
 
             // ===== Columns =====
             CreateColumn("To Do", 10, out pnlToDoTasks);
+            pnlToDoTasks.BackColor = Color.MediumPurple;
+            pnlToDoTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
             CreateColumn("Doing", 340, out pnlDoingTasks);
+            pnlDoingTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
+            pnlDoingTasks.BackColor = Color.MediumBlue;
             CreateColumn("Done", 670, out pnlDoneTasks);
+            pnlDoneTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
+            pnlDoneTasks.BackColor = Color.MediumSeaGreen;
         }
 
         private void CreateColumn(string title, int left, out FlowLayoutPanel taskPanel)
@@ -72,7 +89,7 @@ namespace KanbanApp
             Label lbl = new Label
             {
                 Text = title,
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                Font = new Font("Comics Sans Ms", 12, FontStyle.Bold),
                 Height = 30,
                 Dock = DockStyle.Top,
                 TextAlign = ContentAlignment.MiddleCenter
@@ -107,6 +124,7 @@ namespace KanbanApp
                 Priority = cmbPriority.Text,
                 Status = "To Do",
                 NotifyByEmail = chkNotify.Checked
+                
             };
             tasks.Add(task);
             RefreshBoard();
@@ -155,7 +173,7 @@ namespace KanbanApp
                 case "Medium":
                     return Color.Khaki;
                 case "Low":
-                    return Color.LightGreen;
+                    return Color.LightPink;
                 default:
                     return Color.LightGray;
             }
