@@ -16,7 +16,7 @@ namespace KanbanApp
         public DateTime Deadline { get; set; }
         public bool NotifyByEmail { get; set; }
     }
-
+    
     public class Form1 : Form
     {
         private List<TaskItem> tasks = new List<TaskItem>();
@@ -31,12 +31,19 @@ namespace KanbanApp
         private FlowLayoutPanel pnlToDoTasks;
         private FlowLayoutPanel pnlDoingTasks;
         private FlowLayoutPanel pnlDoneTasks;
-
+        private Timer checkTimer;
         public Form1()
         {
             BuildUI();
             LoadTasks();
             RefreshBoard();
+
+    
+
+            checkTimer = new Timer();
+            checkTimer.Interval = 60000; // κάθε 1 λεπτό
+            checkTimer.Tick += CheckDeadlines;
+            checkTimer.Start();
         }
 
         private void BuildUI()
@@ -76,7 +83,7 @@ namespace KanbanApp
             pnlToDoTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
             CreateColumn("Doing", 340, out pnlDoingTasks);
             pnlDoingTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
-            pnlDoingTasks.BackColor = Color.MediumBlue;
+            pnlDoingTasks.BackColor = ColorTranslator.FromHtml("#327ba8");
             CreateColumn("Done", 670, out pnlDoneTasks);
             pnlDoneTasks.Font = new Font("Comics Sans Ms", 6, FontStyle.Bold);
             pnlDoneTasks.BackColor = Color.MediumSeaGreen;
@@ -232,5 +239,23 @@ namespace KanbanApp
                 tasks = JsonSerializer.Deserialize<List<TaskItem>>(json);
             }
         }
+
+       
+private void CheckDeadlines(object sender, EventArgs e)
+        {
+            foreach (var task in tasks)
+            {
+                // Στέλνει mail 1 μέρα πριν
+                if (task.NotifyByEmail && task.Deadline.Date == DateTime.Now.Date.AddDays(1))
+                {
+                    EmailHelper.SendEmail(
+                        "example@example.com", // 🔹 email που θα λαμβάνει
+                        "Task Reminder",
+                        $"Το task '{task.Title}' λήγει στις {task.Deadline.ToShortDateString()}"
+                    );
+                }
+            }
+        }
+
     }
 }
