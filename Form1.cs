@@ -164,13 +164,7 @@ namespace KanbanApp
             }
         }
 
-        /*  private Color GetPriorityColor(string priority) => priority switch
-          {
-              "High" => Color.LightCoral,
-              "Medium" => Color.Khaki,
-              "Low" => Color.LightGreen,
-              _ => Color.LightGray,
-          }; αυτο αλλαζει σε απο κατω */
+      
         private Color GetPriorityColor(string priority)
         {
             switch (priority)

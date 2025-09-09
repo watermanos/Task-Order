@@ -1,8 +1,7 @@
-﻿using KanbanApp;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
-namespace Task_Order
+namespace KanbanApp
 {
     internal static class Program
     {
@@ -11,7 +10,14 @@ namespace Task_Order
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            using (var login = new LoginForm())
+            {
+                if (login.ShowDialog() == DialogResult.OK)
+                {
+                    Application.Run(new Form1());
+                }
+            }
         }
     }
 }
