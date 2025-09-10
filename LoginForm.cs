@@ -24,7 +24,7 @@ public partial class LoginForm : Form
             txtPartners.Visible = chkHasPartners.Checked;
         };
 
-        txtPartners = new TextBox { Left = 20, Top = 140, Width = 230, Height = 60, Multiline = true, Visible = false };
+        txtPartners = new TextBox { Left = 20, Top = 140, Width = 230, Height = 20, Multiline = true, Visible = false };
 
         this.Controls.Add(chkHasPartners);
         this.Controls.Add(txtPartners);
@@ -38,7 +38,7 @@ public partial class LoginForm : Form
         Label lblPassword = new Label { Text = "App Password:", Left = 20, Top = 70, Width = 80 };
         txtPassword = new TextBox { Left = 100, Top = 70, Width = 150, UseSystemPasswordChar = true };
 
-        btnLogin = new Button { Text = "Login", Left = 100, Top = 120, Width = 100 };
+        btnLogin = new Button { Text = "Login", Left = 50, Top = 160, Width = 200 };
         btnLogin.Click += BtnLogin_Click;
 
         this.Controls.Add(lblEmail);
@@ -61,7 +61,7 @@ public partial class LoginForm : Form
         {
             SenderEmail = txtEmail.Text,
             SenderPassword = txtPassword.Text,
-            RecipientEmail = txtEmail.Text, // ο ίδιος θα λαμβάνει
+            RecipientEmail = txtEmail.Text, 
             PartnerEmails = chkHasPartners.Checked
                 ? txtPartners.Text.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                 : null
