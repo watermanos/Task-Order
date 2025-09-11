@@ -1,4 +1,4 @@
-# 📝 Kanban Board in C# WinForms
+# 📝 Task Order Board in C# WinForms
 
 This project is a simple desktop **Kanban Board** built with **C# (WinForms)**.  
 It allows you to create, organize, and save tasks in 3 columns:
